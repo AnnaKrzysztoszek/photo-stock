@@ -1,8 +1,6 @@
 package pl.com.bottega.photostock.sales.model.money;
 
 
-import pl.com.bottega.photostock.sales.model.Rational;
-
 /**
  * Created by anna on 10.12.2016.
  */
@@ -37,34 +35,6 @@ class RationalMoney implements Money {
             throw new IllegalArgumentException("Money cannot be negative");
 
         return new RationalMoney(value.multiply(factor), currency);
-    }
-
-    @Override
-    public boolean gte(Money other) {//greater than or equals
-        //int i = value.compareTo(other.value);
-        //return i >= 0;
-        return compareTo(other) >= 0;
-    }
-
-    @Override
-    public boolean gt(Money other) {//greater than
-        //int i = value.compareTo(other.value);
-        //return i > 0;
-        return compareTo(other) > 0;
-    }
-
-    @Override
-    public boolean lte(Money other) {//least than or equals
-        //int i = value.compareTo(other.value);
-        //return i <= 0;
-        return compareTo(other) <= 0;
-    }
-
-    @Override
-    public boolean lt(Money other) {//least than
-        //int i = value.compareTo(other.value);
-        //return i < 0;
-        return compareTo(other) < 0;
     }
 
     @Override
@@ -109,6 +79,11 @@ class RationalMoney implements Money {
     @Override
     public RationalMoney convertToRational() {
         return this;
+    }
+
+    @Override
+    public IntegerMoney convertToInteger() {
+        return new IntegerMoney(value.getNumerator() * 100L / value.getDenominator(), currency);
     }
 }
 

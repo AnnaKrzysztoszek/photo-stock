@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.money;
 
 /**
  * Created by anna on 10.12.2016.
@@ -106,6 +106,14 @@ public final class Rational implements Comparable<Rational> {
             return 0;
 
         return (numerator * number.denominator) > (number.numerator * denominator) ? 1 : -1;
+    }
+
+    long getNumerator() {
+        return numerator;
+    }
+
+    long getDenominator() {
+        return denominator;
     }
 
     @Override
