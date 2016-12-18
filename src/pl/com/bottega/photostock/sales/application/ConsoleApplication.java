@@ -15,7 +15,7 @@ public class ConsoleApplication {
         Product product4 = productRepository.get("4");
 
         Client client = new Client("Johny X", new Address(), RationalMoney.valueOf(100));
-        Client vipClient = new VIPClient("Johny VIP", new Address(), RationalMoney.ZERO, RationalMoney.valueOf(100));
+        Client vipClient = new VIPClient("Johny VIP", new Address(), Money.ZERO, RationalMoney.valueOf(100));
 
         System.out.println(client.introduce());
         System.out.println(vipClient.introduce());

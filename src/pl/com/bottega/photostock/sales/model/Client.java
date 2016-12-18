@@ -20,7 +20,7 @@ public class Client {
         this.status = status;
         this.balance = initialBalance;
         this.transactions = new LinkedList<>();
-        if (!initialBalance.equals(RationalMoney.ZERO))
+        if (!initialBalance.equals(Money.ZERO))
             this.transactions.add(new Transaction(initialBalance, "Opening account"));
     }
 
@@ -28,12 +28,12 @@ public class Client {
         this(name, address, ClientStatus.STANDARD, balance);
     }
 
-    public boolean canAfford(RationalMoney money) {
+    public boolean canAfford(Money money) {
         return balance.gte(money);
     }
 
-    public void charge(RationalMoney money, String reason) {
-        if (money.lte(RationalMoney.ZERO))
+    public void charge(Money money, String reason) {
+        if (money.lte(Money.ZERO))
             throw new IllegalArgumentException("Negative charge amount prohibited");
         if (canAfford(money)) {
             Transaction chargeTransaction = new Transaction(money.opposite(), reason);
@@ -46,8 +46,8 @@ public class Client {
         }
     }
 
-    public void recharge(RationalMoney money) {
-        if (money.lte(RationalMoney.ZERO))
+    public void recharge(Money money) {
+        if (money.lte(Money.ZERO))
             throw new IllegalArgumentException("Negative charge amount prohibited");
         Transaction transaction = new Transaction(money, "Recharge account");
         transactions.add(transaction);

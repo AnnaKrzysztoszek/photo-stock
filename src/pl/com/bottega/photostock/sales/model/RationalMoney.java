@@ -6,45 +6,43 @@ package pl.com.bottega.photostock.sales.model;
  */
 public class RationalMoney implements Money {
 
-    private static final Currency DEFAULT_CURRENCY = Currency.CREDIT;
-
-    public static final RationalMoney ZERO = valueOf(0, DEFAULT_CURRENCY);
-
     @Override
     public Money opposite() {
         return valueOf(value.negative(), currency);
     }
 
-    public static RationalMoney valueOf(Rational value, Currency currency) {
+    public static Money valueOf(Rational value, Currency currency) {
         return new RationalMoney(value, currency);
     }
 
-    public static RationalMoney valueOf(long value, Currency currency) {
+    public static Money valueOf(long value, Currency currency) {
         return new RationalMoney(Rational.valueOf(value), currency);
     }
 
-    public static RationalMoney valueOf(long value) {
+    public static Money valueOf(long value) {
         return new RationalMoney(Rational.valueOf(value), DEFAULT_CURRENCY);
     }
 
     @Override
-    public RationalMoney add(RationalMoney addend) {
-        if (currency != addend.currency)
+    public Money add(Money addend) {
+        RationalMoney rationalMoney = addend.convertToRational();
+        if (currency != rationalMoney.currency)
             throw new IllegalArgumentException("The currencies do not match.");
 
-        return valueOf(value.add(addend.value), currency);
+        return valueOf(value.add(rationalMoney.value), currency);
     }
 
     @Override
-    public Money subtract(RationalMoney subtrahend) {
-        if (currency != subtrahend.currency)
+    public Money subtract(Money subtrahend) {
+        RationalMoney rationalMoney = subtrahend.convertToRational();
+        if (currency != rationalMoney.currency)
             throw new IllegalArgumentException("The currencies do not match.");
 
-        return valueOf(value.subtract(subtrahend.value), currency);
+        return valueOf(value.subtract(rationalMoney.value), currency);
     }
 
     @Override
-    public RationalMoney multiply(long factor) {
+    public Money multiply(long factor) {
         if (factor < 0)
             throw new IllegalArgumentException("Money cannot be negative");
 
@@ -52,38 +50,39 @@ public class RationalMoney implements Money {
     }
 
     @Override
-    public boolean gte(RationalMoney other) {//greater than or equals
+    public boolean gte(Money other) {//greater than or equals
         //int i = value.compareTo(other.value);
         //return i >= 0;
         return compareTo(other) >= 0;
     }
 
     @Override
-    public boolean gt(RationalMoney other) {//greater than
+    public boolean gt(Money other) {//greater than
         //int i = value.compareTo(other.value);
         //return i > 0;
         return compareTo(other) > 0;
     }
 
     @Override
-    public boolean lte(RationalMoney other) {//least than or equals
+    public boolean lte(Money other) {//least than or equals
         //int i = value.compareTo(other.value);
         //return i <= 0;
         return compareTo(other) <= 0;
     }
 
     @Override
-    public boolean lt(RationalMoney other) {//least than
+    public boolean lt(Money other) {//least than
         //int i = value.compareTo(other.value);
         //return i < 0;
         return compareTo(other) < 0;
     }
 
     @Override
-    public int compareTo(RationalMoney other) {
-        if (!other.currency.equals(currency))
+    public int compareTo(Money other) {
+        RationalMoney rationalMoney = other.convertToRational();
+        if (!rationalMoney.currency.equals(currency))
             throw new IllegalArgumentException("Currency mismatch");
-        return value.compareTo(other.value);
+        return value.compareTo(rationalMoney.value);
     }
 
     private final Rational value;
@@ -115,6 +114,11 @@ public class RationalMoney implements Money {
         int result = value.hashCode();
         result = 31 * result + currency.hashCode();
         return result;
+    }
+
+    @Override
+    public RationalMoney convertToRational() {
+        return this;
     }
 }
 

@@ -20,7 +20,11 @@ public interface Money extends Comparable<Money> {
 
     boolean lt(Money other);
 
-    int compareTo(Money other);
+    enum Currency {CREDIT;}
 
-    public enum Currency {CREDIT;}
+    Currency DEFAULT_CURRENCY = Currency.CREDIT;
+
+    RationalMoney convertToRational();
+
+    Money ZERO = RationalMoney.valueOf(0, DEFAULT_CURRENCY);
 }

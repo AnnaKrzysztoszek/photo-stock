@@ -24,10 +24,10 @@ public class Offer {
         return items.size();
     }
 
-    public RationalMoney getTotalCost() {
-        RationalMoney totalCost = RationalMoney.ZERO;
+    public Money getTotalCost() {
+        Money totalCost = Money.ZERO;
         for (Product product : items) {
-            RationalMoney productCost = product.calculatePrice(client);
+            Money productCost = product.calculatePrice(client);
             totalCost = totalCost.add(productCost);
         }
         return totalCost;
@@ -38,7 +38,7 @@ public class Offer {
         this.items.sort(new Comparator<Product>() {
             @Override
             public int compare(Product p1, Product p2) {
-                RationalMoney price1 = p1.calculatePrice(client);
+                Money price1 = p1.calculatePrice(client);
                 Money price2 = p2.calculatePrice(client);
                 /*if (price1.equals(price2))
                     return 0;
