@@ -1,9 +1,6 @@
 package pl.com.bottega.photostock.sales.application;
 
-import pl.com.bottega.photostock.sales.model.Clip;
-import pl.com.bottega.photostock.sales.model.Money;
-import pl.com.bottega.photostock.sales.model.Picture;
-import pl.com.bottega.photostock.sales.model.Product;
+import pl.com.bottega.photostock.sales.model.*;
 
 import java.util.HashSet;
 
@@ -38,10 +35,10 @@ public class PictureEqualsTest {
     }
 
     private static Clip clip(String number) {
-        return new Clip(number, "", 500L, Money.valueOf(1));
+        return new Clip(number, "", 500L, RationalMoney.valueOf(1));
     }
 
     private static Product picture(String number) {
-        return new Picture(number, "", new HashSet<>(), Money.valueOf(100));
+        return new Picture(number, "", new HashSet<>(), RationalMoney.valueOf(100));
     }
 }

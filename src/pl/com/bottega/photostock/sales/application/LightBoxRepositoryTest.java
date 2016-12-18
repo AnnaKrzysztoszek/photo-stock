@@ -8,8 +8,8 @@ import pl.com.bottega.photostock.sales.model.*;
 public class LightBoxRepositoryTest {
 
     public static void main(String[] args) {
-        Client client1 = new Client("Client 1", new Address(), Money.valueOf(100));
-        Client client2 = new Client("Client 2", new Address(), Money.valueOf(100));
+        Client client1 = new Client("Client 1", new Address(), RationalMoney.valueOf(100));
+        Client client2 = new Client("Client 2", new Address(), RationalMoney.valueOf(100));
 
         InMemoryLightBoxRepository inMemoryLightBoxRepository = new InMemoryLightBoxRepository();
 

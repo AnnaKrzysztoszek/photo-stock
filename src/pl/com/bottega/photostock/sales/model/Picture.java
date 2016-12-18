@@ -10,16 +10,16 @@ public class Picture extends AbstractProduct {
 
     private Collection<String> tags;
 
-    public Picture(String number, String name, Collection<String> tags, Money catalogPrice, boolean active) {
+    public Picture(String number, String name, Collection<String> tags, RationalMoney catalogPrice, boolean active) {
         super(catalogPrice, active, name, number);//super wywołuje konstruktor klasy bazowej
         this.tags = new HashSet<String>(tags);
     }
-    public Picture(String number, String name, Collection<String> tags, Money catalogPrice) {
+    public Picture(String number, String name, Collection<String> tags, RationalMoney catalogPrice) {
         this(number, name, tags, catalogPrice, true);
     }
 
     @Override
-    public Money calculatePrice(Client client) {
+    public RationalMoney calculatePrice(Client client) {
         return catalogPrice;
     }
 }

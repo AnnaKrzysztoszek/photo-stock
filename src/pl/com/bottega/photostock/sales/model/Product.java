@@ -5,7 +5,7 @@ package pl.com.bottega.photostock.sales.model;
  */
 public interface Product {
 
-    Money calculatePrice(Client client);
+    RationalMoney calculatePrice(Client client);
 
     boolean isAvailable();
 

@@ -7,19 +7,19 @@ public abstract class AbstractProduct implements Product {
 
     protected String number;//ponieważ number jest w equalsie, to zostaje protected
     private String name;
-    protected Money catalogPrice;
+    protected RationalMoney catalogPrice;
     private boolean active;
     private Client reservationOwner;
     private Client buyer;
 
-    public AbstractProduct(Money catalogPrice, boolean active, String number, String name) {
+    public AbstractProduct(RationalMoney catalogPrice, boolean active, String number, String name) {
         this.active = active;
         this.name = name;
         this.catalogPrice = catalogPrice;
         this.number = number;
     }
 
-    public abstract Money calculatePrice(Client client);
+    public abstract RationalMoney calculatePrice(Client client);
 
     @Override
     public boolean isAvailable() {
