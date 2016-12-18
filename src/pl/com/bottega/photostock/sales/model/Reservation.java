@@ -1,7 +1,9 @@
 package pl.com.bottega.photostock.sales.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 /**
  * Created by anna on 10.12.2016.
@@ -9,34 +11,35 @@ import java.util.HashSet;
 public class Reservation {
 
     private Client client;
-    private Collection<Picture> items;
+    private Collection<Product> items;
 
     public Reservation(Client client) {
         this.client = client;
-        this.items = new HashSet<Picture>();
+        this.items = new LinkedList<>();
     }
 
-    public void add(Picture picture) {
-        if (items.contains(picture))
-            throw new IllegalArgumentException(String.format("Picture %s is already in your reservation", picture.getNumber()));
-        if (!picture.isAvailable())
-            throw new IllegalArgumentException(String.format("Picture %s is not available", picture.getNumber()));
-        items.add(picture);
+    public void add(Product product) {
+        if (items.contains(product))
+            throw new IllegalArgumentException(String.format("Prroduct %s is already in your reservation", product.getNumber()));
+        product.ensureAvailable();
+        items.add(product);
     }
 
-    public void remove(Picture picture) {
-        items.remove(picture);
+    public void remove(Product product) {
+        if (!items.contains(product))
+            throw new IllegalArgumentException(String.format("Product %s is not added to reservation.", product.getNumber()));
+        items.remove(product);
     }
 
     public Offer generateOffer() {
         return new Offer(client, getActiveItems());
     }
 
-    private Collection<Picture> getActiveItems() {
-        Collection<Picture> activeItems = new HashSet<>();
-        for (Picture picture : items)
-            if (picture.isActive())
-                activeItems.add(picture);
+    private Collection<Product> getActiveItems() {
+        Collection<Product> activeItems = new HashSet<>();
+        for (Product product : items)
+            if (product.isActive())
+                activeItems.add(product);
         return activeItems;
     }
 

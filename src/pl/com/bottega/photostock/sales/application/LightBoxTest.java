@@ -2,7 +2,6 @@ package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -11,10 +10,10 @@ import java.util.Collection;
 public class LightBoxTest {
 
     public static void main(String[] args) {
-        Collection<String> tags = Arrays.asList("przyroda", "motoryzacja");
-        Picture picture1 = new Picture("BMW", tags, Money.valueOf(3));
-        Picture picture2 = new Picture("Mercedes", tags, Money.valueOf(2));
-        Picture picture3 = new Picture("Porsche", tags, Money.valueOf(4));
+        ProductRepository productRepository = new InMemoryProductRepository();
+        Product product1 = productRepository.get("1");
+        Product product2 = productRepository.get("2");
+        Product product3 = productRepository.get("3");
 
         Client client = new Client("Johny X", new Address(), Money.valueOf(100));
         Client danny = new Client("Danny X", new Address(), Money.valueOf(100));
@@ -23,24 +22,24 @@ public class LightBoxTest {
         LightBox lightBox2 = new LightBox(client, "bmw");
         LightBox lightBox3 = new LightBox(danny, "fast cars");
 
-        lightBox1.add(picture1);
-        lightBox1.add(picture2);
-        lightBox1.add(picture3);
+        lightBox1.add(product1);
+        lightBox1.add(product2);
+        lightBox1.add(product3);
 
-        lightBox2.add(picture1);
+        lightBox2.add(product1);
 
-        lightBox3.add(picture3);
+        lightBox3.add(product3);
 
-        picture1.deactivate();
+        product1.deactivate();
 
-        printLightBoxes(lightBox1, lightBox2, lightBox3);
+        //printLightBoxes(lightBox1, lightBox2, lightBox3);
 
         LightBox l = LightBox.joined(client, "Joined lightBox", lightBox1, lightBox2, lightBox3);
         System.out.println("Joined lightBox");
         printLightBox(l);
     }
 
-    public static void printLightBoxes(LightBox ... lightBoxes) {
+    public static void printLightBoxes(Collection<LightBox> lightBoxes) {
         //System.out.println(lightBoxes.getClass() == LightBox[].class);
         int nr = 1;
         for (LightBox lightBox : lightBoxes) {
@@ -51,12 +50,12 @@ public class LightBoxTest {
     }
 
     private static void printLightBox(LightBox lightBox) {
-        for (Picture picture : lightBox) {
+        for (Product product : lightBox) {
             System.out.println(
                     String.format("%s%s | %s",
-                        (picture.isActive() ? "" : "X "),
-                        picture.getNumber(),
-                        picture.calculatePrice(lightBox.getOwner())
+                        (product.isActive() ? "" : "X "),
+                        product.getNumber(),
+                        product.calculatePrice(lightBox.getOwner())
                     ));
         }
     }

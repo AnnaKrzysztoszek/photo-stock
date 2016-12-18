@@ -2,37 +2,41 @@ package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 /**
  * Created by anna on 10.12.2016.
  */
 public class ConsoleApplication {
 
     public static void main(String[] args) {
-        Collection<String> tags = Arrays.asList("przyroda", "motoryzacja");
-        Picture picture1 = new Picture("BMW", tags, Money.valueOf(3));
-        Picture picture2 = new Picture("Mercedes", tags, Money.valueOf(2));
-        Picture picture3 = new Picture("Porsche", tags, Money.valueOf(4));
+        ProductRepository productRepository = new InMemoryProductRepository();
+        Product product1 = productRepository.get("1");
+        Product product2 = productRepository.get("2");
+        Product product3 = productRepository.get("3");
+        Product product4 = productRepository.get("4");
 
         Client client = new Client("Johny X", new Address(), Money.valueOf(100));
+        Client vipClient = new VIPClient("Johny VIP", new Address(), Money.ZERO, Money.valueOf(100));
 
-        Reservation reservation = new Reservation(client);
+        System.out.println(client.introduce());
+        System.out.println(vipClient.introduce());
 
-        reservation.add(picture1);
-        reservation.add(picture2);
-        reservation.add(picture3);
+        Reservation reservation = new Reservation(vipClient);
+
+        reservation.add(product1);
+        reservation.add(product2);
+        reservation.add(product3);
+        reservation.add(product4);
+
         System.out.println("After adding items count: " + reservation.getItemsCount());
 
         Offer offer = reservation.generateOffer();
 
-        boolean canAfford = client.canAfford(offer.getTotalCost());
+        boolean canAfford = vipClient.canAfford(offer.getTotalCost());
         System.out.println("Client can afford: " + canAfford);
 
         if (canAfford) {
-            client.charge(offer.getTotalCost(), "Test purchase");
-            Purchase purchase = new Purchase(client, picture1, picture2, picture3);
+            vipClient.charge(offer.getTotalCost(), "Test purchase");
+            Purchase purchase = new Purchase(vipClient, product1, product2, product3);
             System.out.println("Client purchased: " + purchase.getItemsCount() + " pictures");
             System.out.println("Total cost: " + offer.getTotalCost());
         }

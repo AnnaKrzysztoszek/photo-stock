@@ -1,9 +1,6 @@
 package pl.com.bottega.photostock.sales.model;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by anna on 10.12.2016.
@@ -12,14 +9,26 @@ public class Purchase {
 
     private Client client;
     private Date purchaseDate;
-    private Collection<Picture> items;
+    private List<Product> items;
 
-    public Purchase(Client client, Collection<Picture> items) {
+    public Purchase(Client client, Collection<Product> items) {
         this.client = client;
-        this.items = new HashSet<Picture>(items);
+        this.items = new LinkedList<>(items);
+        sortProductsByNumber();
     }
 
-    public Purchase(Client client, Picture ... items) {//... dynamiczna liczba elementów
+    private void sortProductsByNumber() {
+        this.items.sort(new Comparator<Product>() {
+            @Override
+            public int compare(Product p1, Product p2) {
+                String number1 = p1.getNumber();
+                String number2 = p2.getNumber();
+                return number1.compareTo(number2);
+            }
+        });
+    }
+
+    public Purchase(Client client, Product ... items) {//... dynamiczna liczba elementów
         this(client, Arrays.asList(items));
     }
 

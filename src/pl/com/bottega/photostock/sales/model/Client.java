@@ -11,23 +11,21 @@ public class Client {
     private String name;
     private Address address;
     private ClientStatus status;
-    private Money balance;//saldo
-    private Money creditLimit;
+    protected Money balance;//saldo
     private Collection<Transaction> transactions;
 
-    public Client(String name, Address address, ClientStatus status, Money initialBalance, Money creditLimit) {
+    public Client(String name, Address address, ClientStatus status, Money initialBalance) {
         this.name = name;
         this.address = address;
         this.status = status;
         this.balance = initialBalance;
-        this.creditLimit = creditLimit;
         this.transactions = new LinkedList<>();
         if (!initialBalance.equals(Money.ZERO))
             this.transactions.add(new Transaction(initialBalance, "Opening account"));
     }
 
     public Client(String name, Address address, Money balance) {
-        this(name, address, ClientStatus.REGULAR, balance, Money.ZERO);
+        this(name, address, ClientStatus.STANDARD, balance);
     }
 
     public boolean canAfford(Money money) {
@@ -58,5 +56,31 @@ public class Client {
 
     public String getName() {
         return name;
+    }
+
+    public String introduce() {
+        /*String statusName = null;
+        switch (status) {
+            case STANDARD:
+                statusName = "Standardowy";
+                break;
+            case VIP:
+                statusName = "VIP";
+                break;
+            case GOLD:
+                statusName = "Złoty";
+                break;
+            case SILVER:
+                statusName = "Srebrny";
+                break;
+            case PLATINUM:
+                statusName = "Platynowy";
+                break;
+            default:
+                statusName = "NN";
+        }
+        return String.format("%s - %s", name, statusName);*/
+        String statusName = status.getStatusName();
+        return String.format("%s - %s", name, statusName);
     }
 }
