@@ -1,5 +1,7 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.money.Money;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,12 +16,12 @@ public class InMemoryProductRepository implements ProductRepository {
 
     static {
         Collection<String> tags = Arrays.asList("przyroda", "motoryzacja");
-        Product product1 = new Picture("1", "BMW", tags, RationalMoney.valueOf(3));
-        Product product2 = new Picture("2", "Mercedes", tags, RationalMoney.valueOf(2));
-        Product product3 = new Picture("3", "Porsche", tags, RationalMoney.valueOf(4));
+        Product product1 = new Picture("1", "BMW", tags, Money.valueOf(3));
+        Product product2 = new Picture("2", "Mercedes", tags, Money.valueOf(2));
+        Product product3 = new Picture("3", "Porsche", tags, Money.valueOf(4));
 
-        Product clip1 = new Clip("4", "Wściekłe pięści węża", 2l * 1000 *60 * 2, RationalMoney.valueOf(5));
-        Product clip2 = new Clip("5", "Sum", 40l * 1000 *60 * 2, RationalMoney.valueOf(5));
+        Product clip1 = new Clip("4", "Wściekłe pięści węża", 2l * 1000 *60 * 2, Money.valueOf(5));
+        Product clip2 = new Clip("5", "Sum", 40l * 1000 *60 * 2, Money.valueOf(5));
 
         REPOSITORY.put("1", product1);
         REPOSITORY.put("2", product2);

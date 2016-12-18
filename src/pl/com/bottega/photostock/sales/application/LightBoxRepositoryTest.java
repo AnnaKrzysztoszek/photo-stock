@@ -1,6 +1,7 @@
 package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 /**
  * Created by anna on 14.12.2016.
@@ -8,8 +9,8 @@ import pl.com.bottega.photostock.sales.model.*;
 public class LightBoxRepositoryTest {
 
     public static void main(String[] args) {
-        Client client1 = new Client("Client 1", new Address(), RationalMoney.valueOf(100));
-        Client client2 = new Client("Client 2", new Address(), RationalMoney.valueOf(100));
+        Client client1 = new Client("Client 1", new Address(), Money.valueOf(100));
+        Client client2 = new Client("Client 2", new Address(), Money.valueOf(100));
 
         InMemoryLightBoxRepository inMemoryLightBoxRepository = new InMemoryLightBoxRepository();
 

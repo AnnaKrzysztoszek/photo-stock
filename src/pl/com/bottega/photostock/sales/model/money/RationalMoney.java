@@ -1,26 +1,16 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.money;
 
+
+import pl.com.bottega.photostock.sales.model.Rational;
 
 /**
  * Created by anna on 10.12.2016.
  */
-public class RationalMoney implements Money {
+class RationalMoney implements Money {
 
     @Override
     public Money opposite() {
-        return valueOf(value.negative(), currency);
-    }
-
-    public static Money valueOf(Rational value, Currency currency) {
-        return new RationalMoney(value, currency);
-    }
-
-    public static Money valueOf(long value, Currency currency) {
-        return new RationalMoney(Rational.valueOf(value), currency);
-    }
-
-    public static Money valueOf(long value) {
-        return new RationalMoney(Rational.valueOf(value), DEFAULT_CURRENCY);
+        return new RationalMoney(value.negative(), currency);
     }
 
     @Override
@@ -29,7 +19,7 @@ public class RationalMoney implements Money {
         if (currency != rationalMoney.currency)
             throw new IllegalArgumentException("The currencies do not match.");
 
-        return valueOf(value.add(rationalMoney.value), currency);
+        return new RationalMoney(value.add(rationalMoney.value), currency);
     }
 
     @Override
@@ -38,7 +28,7 @@ public class RationalMoney implements Money {
         if (currency != rationalMoney.currency)
             throw new IllegalArgumentException("The currencies do not match.");
 
-        return valueOf(value.subtract(rationalMoney.value), currency);
+        return new RationalMoney(value.subtract(rationalMoney.value), currency);
     }
 
     @Override
@@ -46,7 +36,7 @@ public class RationalMoney implements Money {
         if (factor < 0)
             throw new IllegalArgumentException("Money cannot be negative");
 
-        return valueOf(value.multiply(factor), currency);
+        return new RationalMoney(value.multiply(factor), currency);
     }
 
     @Override
@@ -88,7 +78,7 @@ public class RationalMoney implements Money {
     private final Rational value;
     private final Currency currency;
 
-    private RationalMoney(Rational value, Currency currency) {
+    RationalMoney(Rational value, Currency currency) {
         this.value = value;
         this.currency = currency;
     }

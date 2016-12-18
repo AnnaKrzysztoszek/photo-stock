@@ -1,6 +1,7 @@
 package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.Collection;
 
@@ -15,8 +16,8 @@ public class LightBoxTest {
         Product product2 = productRepository.get("2");
         Product product3 = productRepository.get("3");
 
-        Client client = new Client("Johny X", new Address(), RationalMoney.valueOf(100));
-        Client danny = new Client("Danny X", new Address(), RationalMoney.valueOf(100));
+        Client client = new Client("Johny X", new Address(), Money.valueOf(100));
+        Client danny = new Client("Danny X", new Address(), Money.valueOf(100));
 
         LightBox lightBox1 = new LightBox(client, "cars");
         LightBox lightBox2 = new LightBox(client, "bmw");

@@ -1,6 +1,8 @@
 package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.money.Money;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 /**
  * Created by anna on 10.12.2016.
@@ -14,8 +16,8 @@ public class ConsoleApplication {
         Product product3 = productRepository.get("3");
         Product product4 = productRepository.get("4");
 
-        Client client = new Client("Johny X", new Address(), RationalMoney.valueOf(100));
-        Client vipClient = new VIPClient("Johny VIP", new Address(), Money.ZERO, RationalMoney.valueOf(100));
+        Client client = new Client("Johny X", new Address(), Money.valueOf(100));
+        Client vipClient = new VIPClient("Johny VIP", new Address(), Money.ZERO, Money.valueOf(100));
 
         System.out.println(client.introduce());
         System.out.println(vipClient.introduce());
