@@ -21,6 +21,8 @@ public interface Product {
 
     String getNumber();
 
+    String getName();
+
     boolean isActive();
 
     void deactivate();

@@ -2,17 +2,14 @@ package pl.com.bottega.photostock.sales.model;
 
 import pl.com.bottega.photostock.sales.model.money.Money;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by anna on 17.12.2016.
  */
 public class InMemoryProductRepository implements ProductRepository {
 
-    private static final Map<String, Product> REPOSITORY = new HashMap<>();
+    private static final Map<String, Product> REPOSITORY = new TreeMap<>();
 
     static {
         Collection<String> tags = Arrays.asList("przyroda", "motoryzacja");
@@ -40,5 +37,51 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public Product get(String number) {
         return REPOSITORY.get(number);
+    }
+
+    @Override
+    public List<Product> find(Client client, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive) {
+        List<Product> matchingProducts = new LinkedList<>();
+        for (Product product : REPOSITORY.values()) {//values zwraca listę wszystkich wartości, keys zwraca listę wszystkich kluczy
+            if (matches(client, product, nameQuery, tags, priceFrom, priceTo, onlyActive))
+                matchingProducts.add(product);
+        }
+        return matchingProducts;
+    }
+
+    private boolean matches(Client client, Product product, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive) {
+
+        return matchesQuery(product, nameQuery) &&
+                matchesTags(product, tags) &&
+                matchesPriceFrom(client, product, priceFrom) &&
+                matchesPriceTo(client, product, priceTo);
+    }
+
+    private boolean matchesPriceTo(Client client, Product product, Money priceTo) {
+        return priceTo == null || product.calculatePrice(client).lte(priceTo);
+    }
+
+    private boolean matchesPriceFrom(Client client, Product product, Money priceFrom) {
+        return priceFrom == null || product.calculatePrice(client).gte(priceFrom);//cena albo null albo jest większa lub równa od ceny produktu od zadanego klienta
+    }
+
+    private boolean matchesTags(Product product, String[] tags) {
+        if (tags == null || tags.length == 0)
+            return true;
+
+        if (!(product instanceof Picture))
+            return false;
+
+        Picture picture = (Picture) product;
+
+        for (String tag : tags) {
+            if (!picture.hasTag(tag))
+                return false;
+        }
+        return true;
+    }
+
+    private boolean matchesQuery(Product product, String nameQuery) {
+        return nameQuery == null || product.getName().toLowerCase().startsWith(nameQuery.toLowerCase());
     }
 }

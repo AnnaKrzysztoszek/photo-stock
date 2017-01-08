@@ -4,17 +4,21 @@ import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.UUID;
 
 /**
  * Created by anna on 10.12.2016.
  */
 public class Client {
 
+    private static int clientNumber;
     private String name;
     private Address address;
     private ClientStatus status;
     protected Money balance;//saldo
     private Collection<Transaction> transactions;
+    private boolean active = true;
+    private String number;
 
     public Client(String name, Address address, ClientStatus status, Money initialBalance) {
         this.name = name;
@@ -22,12 +26,18 @@ public class Client {
         this.status = status;
         this.balance = initialBalance;
         this.transactions = new LinkedList<>();
+        this.number = nextNumber();
         if (!initialBalance.equals(Money.ZERO))
             this.transactions.add(new Transaction(initialBalance, "Opening account"));
     }
 
     public Client(String name, Address address, Money balance) {
         this(name, address, ClientStatus.STANDARD, balance);
+    }
+
+    private static String nextNumber() {
+        clientNumber += 100;
+        return String.valueOf(clientNumber);
     }
 
     public boolean canAfford(Money money) {
@@ -84,5 +94,17 @@ public class Client {
         return String.format("%s - %s", name, statusName);*/
         String statusName = status.getStatusName();
         return String.format("%s - %s", name, statusName);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void deactivate() {
+        active = false;
+    }
+
+    public  String getNumber() {
+        return number;
     }
 }

@@ -71,6 +71,11 @@ public abstract class AbstractProduct implements Product {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public boolean isActive() {
         return active;
     }

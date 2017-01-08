@@ -1,7 +1,6 @@
-package pl.com.bottega.photostock.sales.application;
+package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.model.*;
-import pl.com.bottega.photostock.sales.model.money.Money;
 import pl.com.bottega.photostock.sales.model.money.Money;
 
 /**

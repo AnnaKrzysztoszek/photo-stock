@@ -34,6 +34,10 @@ public interface Money extends Comparable<Money> {
         return new RationalMoney(Rational.valueOf(value), DEFAULT_CURRENCY);
     }
 
+    static Money valueOf(float value) {
+        return new IntegerMoney((long) (value * 100.0), DEFAULT_CURRENCY);
+    }
+
     default boolean gte(Money other) {//greater than or equals
         //int i = value.compareTo(other.value);
         //return i >= 0;

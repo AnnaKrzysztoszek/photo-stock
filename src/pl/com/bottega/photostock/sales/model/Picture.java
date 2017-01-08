@@ -13,7 +13,7 @@ public class Picture extends AbstractProduct {
     private Collection<String> tags;
 
     public Picture(String number, String name, Collection<String> tags, Money catalogPrice, boolean active) {
-        super(catalogPrice, active, name, number);//super wywołuje konstruktor klasy bazowej
+        super(catalogPrice, active, number, name);//super wywołuje konstruktor klasy bazowej
         this.tags = new HashSet<String>(tags);
     }
     public Picture(String number, String name, Collection<String> tags, Money catalogPrice) {
@@ -23,5 +23,9 @@ public class Picture extends AbstractProduct {
     @Override
     public Money calculatePrice(Client client) {
         return catalogPrice;
+    }
+
+    public boolean hasTag(String tag) {
+        return tags.contains(tag);
     }
 }
