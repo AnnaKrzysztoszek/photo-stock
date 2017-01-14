@@ -45,21 +45,25 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> find(Client client, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive) {
+    public List<Product> find(Client client, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyAvailable) {
         List<Product> matchingProducts = new LinkedList<>();
         for (Product product : REPOSITORY.values()) {//values zwraca listę wszystkich wartości, keys zwraca listę wszystkich kluczy
-            if (matches(client, product, nameQuery, tags, priceFrom, priceTo, onlyActive))
+            if (matches(client, product, nameQuery, tags, priceFrom, priceTo, onlyAvailable))
                 matchingProducts.add(product);
         }
         return matchingProducts;
     }
 
     private boolean matches(Client client, Product product, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive) {
-
         return matchesQuery(product, nameQuery) &&
                 matchesTags(product, tags) &&
                 matchesPriceFrom(client, product, priceFrom) &&
-                matchesPriceTo(client, product, priceTo);
+                matchesPriceTo(client, product, priceTo) &&
+                matchesOnlyActive(product, onlyActive);
+    }
+
+    private boolean matchesOnlyActive(Product product, boolean onlyAvailable) {
+        return !onlyAvailable || product.isAvailable();
     }
 
     private boolean matchesPriceTo(Client client, Product product, Money priceTo) {
