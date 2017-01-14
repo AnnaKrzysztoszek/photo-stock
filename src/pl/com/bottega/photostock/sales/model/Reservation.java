@@ -10,6 +10,7 @@ public class Reservation {
     private Client client;
     private Collection<Product> items;
     private String number;
+    private boolean active = true;
 
     public Reservation(Client client) {
         this.client = client;
@@ -57,5 +58,17 @@ public class Reservation {
 
     public boolean isOwnedBy(String clientNumber) {
         return client.getNumber().equals(clientNumber);
+    }
+
+    public Client getOwner() {
+        return client;
+    }
+
+    public void deactivate() {
+        this.active = false;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

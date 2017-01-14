@@ -1,7 +1,9 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.PurchaseProcess;
+import pl.com.bottega.photostock.sales.model.CantAffordException;
 import pl.com.bottega.photostock.sales.model.Offer;
+import pl.com.bottega.photostock.sales.model.OfferMismatchException;
 import pl.com.bottega.photostock.sales.model.Product;
 
 import java.util.Scanner;
@@ -25,9 +27,30 @@ public class OfferScreen {
         try {
             Offer offer = purchaseProcess.calculateOffer(reservationNumber);
             printOffer(offer);
+            askForConfirmation(offer, reservationNumber);
         }
         catch (IllegalStateException ex) {
             System.out.println("No active products in the reservation. Add products.");
+        }
+    }
+
+    private void askForConfirmation(Offer offer, String reservationNumber) {
+        System.out.println("Do you want to buy? (y/n)");
+        String answer = scanner.nextLine();
+        if (answer.equals("y")) {
+            try {
+                purchaseProcess.confirm(reservationNumber, offer);
+                System.out.println("Congratulations about great decision");
+            }
+            catch (CantAffordException ex) {
+                System.out.println("Unfortunately, you do not have funds in your account. You can take credit.");
+            }
+            catch (OfferMismatchException ex) {
+                System.out.println("You are late, offer is run out of time.");
+            }
+        }
+        else {
+            System.out.println("Maybe next time.");
         }
     }
 

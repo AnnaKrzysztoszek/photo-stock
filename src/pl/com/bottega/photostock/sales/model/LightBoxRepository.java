@@ -10,4 +10,8 @@ public interface LightBoxRepository {
     void put(LightBox lightbox);
 
     Collection<LightBox> getFor(Client client);
+
+    LightBox findLightBox(Client client, String lightBoxName);
+
+    Collection<String> getLightBoxNames(Client client);
 }

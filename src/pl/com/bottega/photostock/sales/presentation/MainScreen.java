@@ -11,12 +11,14 @@ public class MainScreen {
     private final SearchScreen searchScreen;
     private final ReservationScreen reservationScreen;
     private final OfferScreen offerScreen;
+    private final LightBoxScreen lightBoxScreen;
 
-    public MainScreen(Scanner scanner, SearchScreen searchScreen, ReservationScreen reservationScreen, OfferScreen offerScreen) {
+    public MainScreen(Scanner scanner, SearchScreen searchScreen, ReservationScreen reservationScreen, OfferScreen offerScreen, LightBoxScreen lightBoxScreen) {
         this.scanner = scanner;
         this.searchScreen = searchScreen;
         this.reservationScreen = reservationScreen;
         this.offerScreen = offerScreen;
+        this.lightBoxScreen = lightBoxScreen;
     }
 
     public void print() {
@@ -38,6 +40,9 @@ public class MainScreen {
             case "3":
                 offerScreen.print();
                 break;
+            case "4":
+                lightBoxScreen.print();
+                break;
             default:
                 System.out.println("Sorry, I do not understand");
         }
@@ -47,6 +52,7 @@ public class MainScreen {
         System.out.println("1. Search product");
         System.out.println("2. Reserve product");
         System.out.println("3. Generate offer");
+        System.out.println("4. Manage light box");
     }
 
     private String getCommand() {

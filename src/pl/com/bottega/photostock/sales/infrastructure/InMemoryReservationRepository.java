@@ -27,7 +27,7 @@ public class InMemoryReservationRepository implements ReservationRepository {
     public Reservation getActiveReservationForClient(String clientNumber) {
         //pętl która iteruje o wszystkich rezerwacjach, czy jest dla danego klienta jesli nie to null
         for (Reservation reservation : REPOSITORY.values()) {
-            if (reservation.isOwnedBy(clientNumber))
+            if (reservation.isOwnedBy(clientNumber) && reservation.isActive())
                 return reservation;
         }
         return null;
