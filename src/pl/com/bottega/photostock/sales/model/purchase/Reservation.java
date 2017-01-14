@@ -1,4 +1,8 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.purchase;
+
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.product.Product;
+import pl.com.bottega.photostock.sales.model.purchase.Offer;
 
 import java.util.*;
 

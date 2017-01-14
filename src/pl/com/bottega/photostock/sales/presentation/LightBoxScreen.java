@@ -1,12 +1,11 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
-import pl.com.bottega.photostock.sales.model.LightBox;
-import pl.com.bottega.photostock.sales.model.Product;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
+import pl.com.bottega.photostock.sales.model.product.Product;
 
 import java.util.Collection;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by anna on 13.01.2017.

@@ -1,4 +1,8 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.infrastructure;
+
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 
 import java.util.*;
 
