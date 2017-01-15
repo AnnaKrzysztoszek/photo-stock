@@ -67,4 +67,9 @@ class IntegerMoney implements Money {
         if (currency != other.currency)
             throw new IllegalArgumentException("Currency mismatch");
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d.%02d %s", cents / 100, cents % 100, currency.name());
+    }
 }
